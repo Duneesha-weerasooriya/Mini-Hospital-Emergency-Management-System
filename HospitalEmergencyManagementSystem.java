@@ -246,3 +246,42 @@ class PatientRecordBST {
         }
     }
 }
+
+
+// ============================================================
+// EMERGENCY REQUEST CLASS
+// ============================================================
+class EmergencyRequest {
+
+    private String patientId;
+    private String emergencyType;
+    private String requestTime;
+
+    public EmergencyRequest(String patientId, String emergencyType) {
+
+        this.patientId = patientId;
+        this.emergencyType = emergencyType;
+        this.requestTime = new Date().toString();
+    }
+
+    public String getPatientId() {
+        return patientId;
+    }
+
+    public String getEmergencyType() {
+        return emergencyType;
+    }
+
+    public String getRequestTime() {
+        return requestTime;
+    }
+
+    @Override
+    public String toString() {
+
+        return "Patient ID: " + patientId +
+                ", Emergency: " + emergencyType +
+                ", Time: " + requestTime;
+    }
+}
+
