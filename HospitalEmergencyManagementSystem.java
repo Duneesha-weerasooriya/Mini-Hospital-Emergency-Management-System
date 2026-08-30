@@ -17,6 +17,7 @@ class Patient {
                    String contactNumber, String medicalCondition) {
         this.patientId = patientId;
         this.patientName = patientName;
+        this.age = age;
         this.contactNumber = contactNumber;
         this.medicalCondition = medicalCondition;
     }
