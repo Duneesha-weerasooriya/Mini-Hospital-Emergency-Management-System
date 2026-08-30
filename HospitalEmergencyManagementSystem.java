@@ -21,7 +21,8 @@ class Patient {
         this.contactNumber = contactNumber;
         this.medicalCondition = medicalCondition;
     }
-     // Getters
+
+    // Getters
     public String getPatientId() {
         return patientId;
     }
@@ -42,7 +43,7 @@ class Patient {
         return medicalCondition;
     }
 
-       @Override
+    @Override
     public String toString() {
         return "Patient ID: " + patientId +
                 ", Name: " + patientName +
@@ -52,7 +53,8 @@ class Patient {
     }
 }
 
-    // ============================================================
+
+// ============================================================
 // BST NODE
 // ============================================================
 class BSTNode {
@@ -79,3 +81,4 @@ class PatientRecordBST {
     public PatientRecordBST() {
         root = null;
     }
+    
