@@ -285,3 +285,50 @@ class EmergencyRequest {
     }
 }
 
+
+// ============================================================
+// EMERGENCY PATIENT QUEUE
+// FIFO - First In First Out
+// ============================================================
+class EmergencyPatientQueue {
+
+    private Queue<EmergencyRequest> queue;
+
+    public EmergencyPatientQueue() {
+        queue = new LinkedList<>();
+    }
+
+    // --------------------------------------------------------
+    // ENQUEUE
+    // --------------------------------------------------------
+    public void enqueue(EmergencyRequest request) {
+
+        queue.offer(request);
+
+        System.out.println(
+                "Patient added to emergency queue: " + request
+        );
+    }
+
+    // --------------------------------------------------------
+    // DEQUEUE
+    // --------------------------------------------------------
+    public EmergencyRequest dequeue() {
+
+        if (queue.isEmpty()) {
+
+            System.out.println(
+                    "No patients are waiting in the emergency queue."
+            );
+
+            return null;
+        }
+
+        EmergencyRequest request = queue.poll();
+
+        System.out.println(
+                "Processing emergency patient: " + request
+        );
+
+        return request;
+    }
