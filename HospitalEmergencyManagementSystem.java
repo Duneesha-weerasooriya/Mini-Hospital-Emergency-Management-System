@@ -204,3 +204,45 @@ class PatientRecordBST {
 
         return root;
     }
+
+     // Find minimum patient in right subtree
+    private Patient minValue(BSTNode root) {
+
+        Patient minimum = root.patient;
+
+        while (root.left != null) {
+            root = root.left;
+            minimum = root.patient;
+        }
+
+        return minimum;
+    }
+
+    // --------------------------------------------------------
+    // In-order traversal
+    // --------------------------------------------------------
+    public void displayPatients() {
+
+        System.out.println("\n=== Patient Records "
+                + "(Ascending Patient ID) ===");
+
+        if (root == null) {
+            System.out.println("No patient records available.");
+            return;
+        }
+
+        inorderRec(root);
+    }
+
+    private void inorderRec(BSTNode root) {
+
+        if (root != null) {
+
+            inorderRec(root.left);
+
+            System.out.println(root.patient);
+
+            inorderRec(root.right);
+        }
+    }
+}
