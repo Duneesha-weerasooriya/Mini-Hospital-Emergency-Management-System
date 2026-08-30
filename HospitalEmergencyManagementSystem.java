@@ -141,3 +141,66 @@ class PatientRecordBST {
 
         return searchRec(root.right, patientId);
     }
+
+    // --------------------------------------------------------
+    // Delete patient
+    // --------------------------------------------------------
+    public boolean deletePatient(String patientId) {
+
+        if (searchPatient(patientId) == null) {
+            System.out.println("Patient not found.");
+            return false;
+        }
+
+        root = deleteRec(root, patientId);
+
+        System.out.println("Patient with ID " + patientId
+                + " deleted successfully.");
+
+        return true;
+    }
+
+    private BSTNode deleteRec(BSTNode root, String patientId) {
+
+        if (root == null) {
+            return null;
+        }
+
+        if (patientId.compareTo(root.patient.getPatientId()) < 0) {
+
+            root.left = deleteRec(root.left, patientId);
+
+        } else if (patientId.compareTo(root.patient.getPatientId()) > 0) {
+
+            root.right = deleteRec(root.right, patientId);
+
+        } else {
+
+            // Case 1: No child
+            if (root.left == null && root.right == null) {
+                return null;
+            }
+
+            // Case 2: Only right child
+            if (root.left == null) {
+                return root.right;
+            }
+
+            // Case 3: Only left child
+            if (root.right == null) {
+                return root.left;
+            }
+
+            // Case 4: Two children
+            Patient successor = minValue(root.right);
+
+            root.patient = successor;
+
+            root.right = deleteRec(
+                    root.right,
+                    successor.getPatientId()
+            );
+        }
+
+        return root;
+    }
