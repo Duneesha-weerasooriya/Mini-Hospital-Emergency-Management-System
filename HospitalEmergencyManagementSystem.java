@@ -42,6 +42,16 @@ class Patient {
         return medicalCondition;
     }
 
+       @Override
+    public String toString() {
+        return "Patient ID: " + patientId +
+                ", Name: " + patientName +
+                ", Age: " + age +
+                ", Contact: " + contactNumber +
+                ", Condition: " + medicalCondition;
+    }
+}
+
     // ============================================================
 // BST NODE
 // ============================================================
@@ -56,3 +66,16 @@ class BSTNode {
         this.right = null;
     }
 }
+
+
+// ============================================================
+// BINARY SEARCH TREE FOR PATIENT RECORDS
+// Key = Patient ID
+// ============================================================
+class PatientRecordBST {
+
+    private BSTNode root;
+
+    public PatientRecordBST() {
+        root = null;
+    }
