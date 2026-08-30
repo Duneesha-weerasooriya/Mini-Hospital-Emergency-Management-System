@@ -41,3 +41,18 @@ class Patient {
     public String getMedicalCondition() {
         return medicalCondition;
     }
+
+    // ============================================================
+// BST NODE
+// ============================================================
+class BSTNode {
+    Patient patient;
+    BSTNode left;
+    BSTNode right;
+
+    public BSTNode(Patient patient) {
+        this.patient = patient;
+        this.left = null;
+        this.right = null;
+    }
+}
