@@ -117,3 +117,27 @@ class PatientRecordBST {
 
         return root;
     }
+
+    // --------------------------------------------------------
+    // Search patient
+    // --------------------------------------------------------
+    public Patient searchPatient(String patientId) {
+        return searchRec(root, patientId);
+    }
+
+    private Patient searchRec(BSTNode root, String patientId) {
+
+        if (root == null) {
+            return null;
+        }
+
+        if (root.patient.getPatientId().equals(patientId)) {
+            return root.patient;
+        }
+
+        if (patientId.compareTo(root.patient.getPatientId()) < 0) {
+            return searchRec(root.left, patientId);
+        }
+
+        return searchRec(root.right, patientId);
+    }
