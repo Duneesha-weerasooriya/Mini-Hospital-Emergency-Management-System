@@ -953,3 +953,347 @@ public class HospitalEmergencyManagementSystem {
             }
         }
     }
+
+     // ========================================================
+    // 1. REGISTER PATIENT
+    // ========================================================
+    private void registerPatient() {
+
+        System.out.println(
+                "\n=== Register New Patient ==="
+        );
+
+        System.out.print("Enter Patient ID: ");
+        String patientId = scanner.nextLine();
+
+        System.out.print("Enter Patient Name: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Enter Age: ");
+        int age = scanner.nextInt();
+
+        scanner.nextLine();
+
+        System.out.print("Enter Contact Number: ");
+        String contact = scanner.nextLine();
+
+        System.out.print("Enter Medical Condition: ");
+        String condition = scanner.nextLine();
+
+        Patient patient = new Patient(
+                patientId,
+                name,
+                age,
+                contact,
+                condition
+        );
+
+        patientRecords.insertPatient(patient);
+    }
+
+    // ========================================================
+    // 2. DELETE PATIENT
+    // ========================================================
+    private void deletePatient() {
+
+        System.out.print(
+                "Enter Patient ID to delete: "
+        );
+
+        String patientId = scanner.nextLine();
+
+        patientRecords.deletePatient(patientId);
+    }
+
+    // ========================================================
+    // 3. SEARCH PATIENT
+    // ========================================================
+    private void searchPatient() {
+
+        System.out.print(
+                "Enter Patient ID to search: "
+        );
+
+        String patientId = scanner.nextLine();
+
+        Patient patient =
+                patientRecords.searchPatient(patientId);
+
+        if (patient != null) {
+
+            System.out.println(
+                    "\nPatient Found:"
+            );
+
+            System.out.println(patient);
+
+        } else {
+
+            System.out.println(
+                    "Patient not found with ID: "
+                            + patientId
+            );
+        }
+    }
+
+    // ========================================================
+    // 4. ADD PATIENT TO EMERGENCY QUEUE
+    // ========================================================
+    private void addEmergencyRequest() {
+
+        System.out.println(
+                "\n=== Emergency Patient Registration ==="
+        );
+
+        System.out.print("Enter Patient ID: ");
+        String patientId = scanner.nextLine();
+
+        Patient patient =
+                patientRecords.searchPatient(patientId);
+
+        if (patient == null) {
+
+            System.out.println(
+                    "Patient not found. Please register patient first."
+            );
+
+            return;
+        }
+
+        System.out.print(
+                "Enter Emergency Type: "
+        );
+
+        String emergencyType =
+                scanner.nextLine();
+
+        EmergencyRequest request =
+                new EmergencyRequest(
+                        patientId,
+                        emergencyType
+                );
+
+        emergencyQueue.enqueue(request);
+    }
+
+    // ========================================================
+    // 5. PROCESS EMERGENCY PATIENT
+    // ========================================================
+    private void processEmergencyPatient() {
+
+        EmergencyRequest request =
+                emergencyQueue.dequeue();
+
+        if (request != null) {
+
+            Patient patient =
+                    patientRecords.searchPatient(
+                            request.getPatientId()
+                    );
+
+            if (patient != null) {
+
+                System.out.println(
+                        "\nPatient sent for treatment:"
+                );
+
+                System.out.println(patient);
+            }
+        }
+    }
+
+    // ========================================================
+    // 6. COMPLETE TREATMENT
+    // ========================================================
+    private void completeTreatment() {
+
+        System.out.println(
+                "\n=== Complete Patient Treatment ==="
+        );
+
+        System.out.print("Enter Patient ID: ");
+        String patientId = scanner.nextLine();
+
+        Patient patient =
+                patientRecords.searchPatient(patientId);
+
+        if (patient == null) {
+
+            System.out.println(
+                    "Patient not found."
+            );
+
+            return;
+        }
+
+        System.out.print("Enter Doctor Name: ");
+        String doctorName = scanner.nextLine();
+
+        System.out.print("Enter Treatment Given: ");
+        String treatment = scanner.nextLine();
+
+        TreatmentRecord record =
+                new TreatmentRecord(
+                        patientId,
+                        patient.getPatientName(),
+                        doctorName,
+                        treatment
+                );
+
+        treatmentStack.push(record);
+    }
+
+    // ========================================================
+    // 7. PROCESS TREATMENT STACK
+    // ========================================================
+    private void processTreatment() {
+
+        treatmentStack.pop();
+    }
+
+    // ========================================================
+    // 8. ADD PATIENT VISIT
+    // ========================================================
+    private void addPatientVisit() {
+
+        System.out.println(
+                "\n=== Add Patient Visit ==="
+        );
+
+        System.out.print("Enter Patient ID: ");
+        String patientId = scanner.nextLine();
+
+        Patient patient =
+                patientRecords.searchPatient(patientId);
+
+        if (patient == null) {
+
+            System.out.println(
+                    "Patient not found."
+            );
+
+            return;
+        }
+
+        System.out.print("Enter Visit ID: ");
+        String visitId = scanner.nextLine();
+
+        System.out.print("Enter Visit Date: ");
+        String visitDate = scanner.nextLine();
+
+        System.out.print("Enter Doctor Name: ");
+        String doctorName = scanner.nextLine();
+
+        System.out.print("Enter Diagnosis: ");
+        String diagnosis = scanner.nextLine();
+
+        System.out.print("Enter Treatment: ");
+        String treatment = scanner.nextLine();
+
+        PatientVisitHistory history =
+                visitHistories.get(patientId);
+
+        if (history == null) {
+
+            history =
+                    new PatientVisitHistory(patientId);
+
+            visitHistories.put(
+                    patientId,
+                    history
+            );
+        }
+
+        history.addVisit(
+                visitId,
+                visitDate,
+                doctorName,
+                diagnosis,
+                treatment
+        );
+    }
+
+    // ========================================================
+    // 9. REMOVE PATIENT VISIT
+    // ========================================================
+    private void removePatientVisit() {
+
+        System.out.print(
+                "Enter Patient ID: "
+        );
+
+        String patientId =
+                scanner.nextLine();
+
+        PatientVisitHistory history =
+                visitHistories.get(patientId);
+
+        if (history == null) {
+
+            System.out.println(
+                    "No visit history found."
+            );
+
+            return;
+        }
+
+        System.out.print(
+                "Enter Visit ID to remove: "
+        );
+
+        String visitId =
+                scanner.nextLine();
+
+        history.removeVisit(visitId);
+    }
+
+    // ========================================================
+    // 10. SEARCH PATIENT VISIT
+    // ========================================================
+    private void searchPatientVisit() {
+
+        System.out.print(
+                "Enter Patient ID: "
+        );
+
+        String patientId =
+                scanner.nextLine();
+
+        PatientVisitHistory history =
+                visitHistories.get(patientId);
+
+        if (history == null) {
+
+            System.out.println(
+                    "No visit history found."
+            );
+
+            return;
+        }
+
+        System.out.print(
+                "Enter Visit ID to search: "
+        );
+
+        String visitId =
+                scanner.nextLine();
+
+        VisitNode visit =
+                history.searchVisit(visitId);
+
+        if (visit != null) {
+
+            System.out.println(
+                    "\nVisit Found:"
+            );
+
+            System.out.println(visit);
+
+        } else {
+
+            System.out.println(
+                    "Visit not found with ID: "
+                            + visitId
+            );
+        }
+    }
