@@ -1297,3 +1297,43 @@ public class HospitalEmergencyManagementSystem {
             );
         }
     }
+
+    // ========================================================
+    // 11. DISPLAY PATIENT VISIT HISTORY
+    // ========================================================
+    private void displayPatientVisitHistory() {
+
+        System.out.print(
+                "Enter Patient ID: "
+        );
+
+        String patientId =
+                scanner.nextLine();
+
+        PatientVisitHistory history =
+                visitHistories.get(patientId);
+
+        if (history != null) {
+
+            history.displayHistory();
+
+        } else {
+
+            System.out.println(
+                    "No visit history found for patient: "
+                            + patientId
+            );
+        }
+    }
+
+    // ========================================================
+    // MAIN METHOD
+    // ========================================================
+    public static void main(String[] args) {
+
+        HospitalEmergencyManagementSystem system =
+                new HospitalEmergencyManagementSystem();
+
+        system.run();
+    }
+}
